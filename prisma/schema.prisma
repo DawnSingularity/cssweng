@@ -9,7 +9,6 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 model Post {
     id        Int      @id @default(autoincrement())
