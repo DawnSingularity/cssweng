@@ -29,7 +29,7 @@ export default function Home() {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div>
-          Hello, {userId} your current active session is {sessionId}
+          Hello, {user?.username} your current active session is {sessionId}
         </div>
         <UserButton afterSignOutUrl="/"/>
       </main>
