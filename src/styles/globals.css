@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.cl-internal-b3fm6y, .cl-headerSubtitle{
+    visibility: hidden;
+    
+}
+.cl-headerSubtitle{
+    color: rgb(225 225 225 / 65%);
+}
+
+.cl-otpCodeFieldInput{
+    background-color: white;
+
+}
