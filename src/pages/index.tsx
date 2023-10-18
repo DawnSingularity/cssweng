@@ -14,7 +14,7 @@ export default function Home() {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div>
-          hello you don't have an account
+          hello you do not have an account
         </div>
         <SignIn/>
       </main>
