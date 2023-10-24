@@ -1,10 +1,17 @@
 import Head from "next/head";
 import { SignOutButton, useAuth } from "@clerk/nextjs";
 import { SignIn, UserButton, useUser } from "@clerk/clerk-react";
+import { useState } from "react";
 
 export default function Home() {
   const { isLoaded, userId, sessionId, getToken } = useAuth();
-  const {isSignedIn, user } = useUser();
+  const {user } = useUser();
+
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setModalOpen(!isModalOpen);
+  };
   if (!isLoaded || !userId) {
     return (<>
       <Head>
@@ -13,10 +20,32 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <div>
+      <div>
           hello you do not have an account
         </div>
-        <SignIn/>
+              <button
+                className="fixed top-4 right-4 bg-blue-700 hover:bg-blue-900 text-white py-2 px-4 rounded"
+                onClick={toggleModal}
+              >
+                Open Modal
+              </button>
+
+              {isModalOpen && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-md">
+                <div className="modal-bg fixed inset-0 opacity-50"></div>
+                <div className="modal-content bg-transparent p-8 rounded z-50 flex flex-col">
+                  <SignIn />
+                  <button
+                    className="mt-4 mr-7 bg-blue-700 hover:bg-blue-900 text-white py-2 px-4 rounded self-end"
+                    onClick={toggleModal}
+                  >
+                    Close Modal
+                  </button>
+                </div>
+              </div>
+            )}
+        
+        
       </main>
     </>);
   }
