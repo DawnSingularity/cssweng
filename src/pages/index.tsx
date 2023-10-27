@@ -1,10 +1,9 @@
 import Head from "next/head";
 import { useAuth } from "@clerk/nextjs";
 import { UserButton, useUser } from "@clerk/clerk-react";
-import { useRouter } from "next/router";
 
 export default function Home() {
-  const { isLoaded, isSignedIn, sessionId, getToken } = useAuth();
+  const { sessionId, getToken } = useAuth();
   const user = useUser();
     return (
       <>

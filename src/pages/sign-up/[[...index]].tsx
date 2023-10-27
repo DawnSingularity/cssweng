@@ -1,15 +1,9 @@
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/router";
-import Head from "next/head";
-import { SignOutButton, useAuth } from "@clerk/nextjs";
 import { SignIn, useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 
 export default function SignUpForm() {
-  
-
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
-  const {user } = useUser();
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -19,7 +13,6 @@ export default function SignUpForm() {
   const { isLoaded: isLoadedSignUp, signUp, setActive } = useSignUp();
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
-  const { isSignedIn } = useAuth();
   const [pendingVerification, setPendingVerification] = useState(false);
   const router = useRouter();
   
@@ -41,8 +34,8 @@ export default function SignUpForm() {
       } else {
         console.log(result);
       }
-    } catch (err: any) {
-      console.error("error", err?.errors[0]?.longMessage);
+    } catch (err) {
+      console.error("Error occurred:", err);
     }
   };
   
