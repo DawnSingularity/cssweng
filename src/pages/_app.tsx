@@ -7,11 +7,7 @@ import { dark } from "@clerk/themes";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark
-      }}
-    >
+    <ClerkProvider>
   <Component {...pageProps} />
   </ClerkProvider>
   );

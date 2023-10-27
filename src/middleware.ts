@@ -1,7 +1,7 @@
 import { authMiddleware } from "@clerk/nextjs";
 export default authMiddleware({
   // "/" will be accessible to all users
-  publicRoutes: ["/", "/sign-up"] // do not redirect sign-up
+  publicRoutes: ["/"]
 });
  
 export const config = {

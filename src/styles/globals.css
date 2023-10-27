@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-.cl-internal-b3fm6y, .cl-headerSubtitle{
+.cl-internal-b3fm6y, .cl-headerSubtitle, .cl-footerAction{
     visibility: hidden;
-    
 }
 .cl-headerSubtitle{
     color: rgb(225 225 225 / 65%);
