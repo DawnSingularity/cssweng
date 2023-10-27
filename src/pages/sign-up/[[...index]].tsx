@@ -2,8 +2,8 @@ import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { SignOutButton, useAuth } from "@clerk/nextjs";
-import { SignIn, UserButton, useUser } from "@clerk/clerk-react";
-import { useEffect, useState } from "react";
+import { SignIn, useUser } from "@clerk/clerk-react";
+import { useState } from "react";
 
 export default function SignUpForm() {
   
@@ -24,28 +24,26 @@ export default function SignUpForm() {
   const router = useRouter();
   
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!isLoadedSignUp) {
       return;
     }
-    signUp.create({
-      emailAddress,
-      password,
-    })
-      .then((result) => {
-        if (result.status === "complete") {
-          return setActive({ session: result.createdSessionId });
-        } else {
-          console.log(result);
-        }
-      })
-      .then(() => {
-        router.push("/");
-      })
-      .catch((err) => {
-        console.error("error", err.errors[0].longMessage);
+    try {
+      const result = await signUp.create({
+        emailAddress,
+        password,
       });
+  
+      if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
+        router.push("/");
+      } else {
+        console.log(result);
+      }
+    } catch (err: any) {
+      console.error("error", err?.errors[0]?.longMessage);
+    }
   };
   
   
