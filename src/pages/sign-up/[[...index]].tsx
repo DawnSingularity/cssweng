@@ -24,27 +24,30 @@ export default function SignUpForm() {
   const router = useRouter();
   
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!isLoadedSignUp) {
       return;
     }
-    try {
-      const result = await signUp.create({
-        emailAddress,
-        password,
-      });
-  
-      if (result.status === "complete") {
-        void setActive({ session: result.createdSessionId });
+    signUp.create({
+      emailAddress,
+      password,
+    })
+      .then((result) => {
+        if (result.status === "complete") {
+          return setActive({ session: result.createdSessionId });
+        } else {
+          console.log(result);
+        }
+      })
+      .then(() => {
         router.push("/");
-      } else {
-        console.log(result);
-      }
-    } catch (err: any) {
-      console.error("error", err.errors[0].longMessage);
-    }
+      })
+      .catch((err) => {
+        console.error("error", err.errors[0].longMessage);
+      });
   };
+  
   
   return (
     <div>
