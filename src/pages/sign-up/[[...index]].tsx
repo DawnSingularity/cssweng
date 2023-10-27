@@ -38,13 +38,13 @@ export default function SignUpForm() {
  
       if (result.status === "complete") {
         void await setActive({ session: result.createdSessionId });
-        router.push("/")
+        router.push("/");
       }
       else {
         console.log(result);
       }
     } catch (err: any) {
-      console.error("error", err.errors[0].longMessage)
+      console.error("error", err.errors[0].longMessage);
     }
   };
   return (
