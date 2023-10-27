@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 export default function Home() {
   const { isLoaded, isSignedIn, sessionId, getToken } = useAuth();
   const user = useUser();
-  if(isLoaded){
     return (
       <>
         <Head>
@@ -22,7 +21,6 @@ export default function Home() {
         </main>
       </>
     );
-  }
 
   
 }
