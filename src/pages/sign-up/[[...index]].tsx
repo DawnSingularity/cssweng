@@ -40,6 +40,9 @@ export default function SignUpForm() {
         void await setActive({ session: result.createdSessionId });
         router.push("/")
       }
+      else {
+        console.log(result);
+      }
     } catch (err: any) {
       console.error("error", err.errors[0].longMessage)
     }
