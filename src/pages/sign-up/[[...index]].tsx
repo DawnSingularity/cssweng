@@ -30,7 +30,7 @@ export default function SignUpForm() {
   
       if (result.status === "complete") {
         void await setActive({ session: result.createdSessionId });
-        router.push("/");
+        void router.push("/");
       } else {
         console.log(result);
       }
