@@ -29,7 +29,7 @@ export default function SignUpForm() {
       });
   
       if (result.status === "complete") {
-        await setActive({ session: result.createdSessionId });
+        void await setActive({ session: result.createdSessionId });
         router.push("/");
       } else {
         console.log(result);
