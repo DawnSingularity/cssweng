@@ -24,7 +24,6 @@ export default function SignUpForm() {
   const router = useRouter();
   
 
-  // start the sign up process.
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!isLoadedSignUp) {
@@ -35,18 +34,18 @@ export default function SignUpForm() {
         emailAddress,
         password,
       });
- 
+  
       if (result.status === "complete") {
-        void await setActive({ session: result.createdSessionId });
+        void setActive({ session: result.createdSessionId });
         router.push("/");
-      }
-      else {
+      } else {
         console.log(result);
       }
     } catch (err: any) {
       console.error("error", err.errors[0].longMessage);
     }
   };
+  
   return (
     <div>
       <style dangerouslySetInnerHTML={{__html: "\n:root {\n--font-family: 'Inter', sans-serif;\n --text-color: #333333;\n--suleat: #fc571a;\n}\n\nbody {\nfont-family: var(--font-family);\ncolor: var(--text-color);\n}\n\n.suleat {\n color: var(--suleat);\n background-color: var(--suleat);\n}\n" }} />
