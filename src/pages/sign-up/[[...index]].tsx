@@ -37,11 +37,10 @@ export default function SignUpForm() {
       }
     })
     .catch((err) => {
-      const errorMessage = err;
+      const errorMessage = err?.message;
       if (errorMessage && errorMessage[0]) {
         toast.error(err.errors[0].message);
       } else {
-        // Display a generic error message if no specific error message is available
         toast.error('An error occurred. Please try again later.');
       }
     })
