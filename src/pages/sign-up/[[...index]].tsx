@@ -23,27 +23,20 @@ export default function SignUpForm() {
     if (!isLoadedSignUp) {
       return;
     }
-    try {
-      const result = await signUp.create({
-        emailAddress,
-        password,
-      });
-  
-      if (result.status === "complete") {
-        void await setActive({ session: result.createdSessionId });
-        void router.push("/");
+    const response = await signUp?.create({
+      emailAddress,
+      password,
+    })
+    .then((res) => {
+      if (res.status === "complete") {
+        console.log(res.status);
+        setActive({ session: res.createdSessionId });
+        router.push("/");
       } else {
-        console.log(result);
+        console.log(res);
       }
-    } catch (err: any) {
-      if (err.errors && err.errors.length > 0) {
-        // Display the first error message as a toast using hot-toast
-        toast.error(err.errors[0].message);
-      } else {
-        // Display a generic error message if no specific error message is available
-        toast.error('An error occurred. Please try again later.');
-      }
-    }
+    })
+    .catch((err) => toast.error(err.errors[0].message))
   };
 
   const SignInOAuthButtons = () => {
