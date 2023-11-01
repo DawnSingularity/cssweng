@@ -27,16 +27,25 @@ export default function SignUpForm() {
       emailAddress,
       password,
     })
-    .then((res) => {
+    .then(async (res) => {
       if (res.status === "complete") {
         console.log(res.status);
-        setActive({ session: res.createdSessionId });
+        void await setActive({ session: res.createdSessionId });
         router.push("/");
       } else {
         console.log(res);
       }
     })
-    .catch((err) => toast.error(err.errors[0].message))
+    .catch((err) => {
+      const errorMessage = err;
+      if (errorMessage && errorMessage[0]) {
+        toast.error(err.errors[0].message);
+      } else {
+        // Display a generic error message if no specific error message is available
+        toast.error('An error occurred. Please try again later.');
+      }
+    })
+      
   };
 
   const SignInOAuthButtons = () => {
