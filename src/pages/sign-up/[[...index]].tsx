@@ -4,6 +4,13 @@ import { SignIn, useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 import { useSignIn } from '@clerk/nextjs';
 import toast from "react-hot-toast";
+interface ApiErrorResponse  {
+  errors: {
+    message: string;
+    // Add other properties if necessary
+  }[];
+}
+
 export default function SignUpForm() {
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -36,15 +43,17 @@ export default function SignUpForm() {
         console.log(res);
       }
     })
-    .catch((err) => {
-      const errorMessage = err?.message;
-      if (errorMessage && errorMessage[0]) {
-        toast.error(err.errors[0].message);
+    .catch((err:unknown) => {
+      if (err instanceof Error) {
+        const apiError = err as unknown as ApiErrorResponse;
+        // Use optional chaining operator to safely access properties
+        const errorMessage = apiError?.errors?.[0]?.message ?? "An error occurred. Please try again later.";
+        toast.error(errorMessage);
       } else {
-        toast.error('An error occurred. Please try again later.');
+        toast.error("An unknown error occurred.");
       }
     })
-      
+
   };
 
   const SignInOAuthButtons = () => {
