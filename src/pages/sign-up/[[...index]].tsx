@@ -2,7 +2,8 @@ import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import { SignIn, useUser } from "@clerk/clerk-react";
 import { useState } from "react";
-
+import { useSignIn } from '@clerk/nextjs';
+import toast from "react-hot-toast";
 export default function SignUpForm() {
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -34,11 +35,52 @@ export default function SignUpForm() {
       } else {
         console.log(result);
       }
-    } catch (err) {
-      console.error("Error occurred:", err);
+    } catch (err: any) {
+      if (err.errors && err.errors.length > 0) {
+        // Display the first error message as a toast using hot-toast
+        toast.error(err.errors[0].message);
+      } else {
+        // Display a generic error message if no specific error message is available
+        toast.error('An error occurred. Please try again later.');
+      }
     }
   };
-  
+
+  const SignInOAuthButtons = () => {
+    const { signIn, isLoaded } = useSignIn();
+    if (!isLoaded) {
+      return null;
+    }
+    const signInWithGoogle = () =>
+      signIn.authenticateWithRedirect({
+        strategy: 'oauth_google',
+        redirectUrl: '/sso-callback',
+        redirectUrlComplete: '/'
+      });
+      const signInWithFacebook = () =>
+      signIn.authenticateWithRedirect({
+        strategy: 'oauth_facebook',
+        redirectUrl: '/sso-callback',
+        redirectUrlComplete: '/'
+      });
+      
+    return (
+      <div>
+        <button className="text-white bg-gray-600 h-12 rounded-xl border-2 mb-2 w-11/12 m-auto flex justify-center" onClick={signInWithGoogle}>
+            <img className="h-8 w-8 my-auto inline" src="https://www.google.com/favicon.ico" alt={`google`} width={32} height={32} />
+            <div className="relative my-auto ml-3">
+                Register with Google
+            </div>
+        </button>
+        <button className="text-white bg-gray-600 h-12 rounded-xl border-2 mb-2 w-11/12 m-auto flex justify-center" onClick={signInWithFacebook}>
+            <img className="h-8 w-8 my-auto inline" src="https://www.facebook.com/favicon.ico" alt={`google`} width={32} height={32} />
+            <div className="relative my-auto ml-3">
+                Register with faebook
+            </div>
+        </button>
+      </div>
+    );
+  };
   
   return (
     <div>
@@ -78,12 +120,7 @@ export default function SignUpForm() {
                         <button value="Register Now" className="cursor-pointer text-white bg-[color:var(--suleat)] h-12 rounded-xl border-2 mb-2 w-11/12 m-auto" onClick={handleSubmit}> Register</button>
                       </form>
                       <div className="text-center text-xl mb-2">or</div>
-                      <button className="text-white bg-gray-600 h-12 rounded-xl border-2 mb-2 w-11/12 m-auto flex justify-center">
-                          <img className="h-8 w-8 my-auto inline" src="https://www.google.com/favicon.ico" alt={`google`} width={32} height={32} />
-                          <div className="relative my-auto ml-3">
-                              Register with Google
-                          </div>
-                      </button>
+                      <SignInOAuthButtons/>
                   </div>
               </div>
               <div className="flex flex-row p-6 min-[1064.5px]:w-1/2 min-[1064.5px]:max-w-3xl max-w-[500px] min-[1064.5px]:min-w-[34rem] h-screen items-center shrink-0">
